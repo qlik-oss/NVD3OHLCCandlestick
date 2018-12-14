@@ -1,4 +1,5 @@
 Qlik Sense NVD3 OHLC and Candlestick Extension
+[![CircleCI](https://circleci.com/gh/qlik-oss/NVD3OHLCCandlestick.svg?style=svg)](https://circleci.com/gh/qlik-oss/NVD3OHLCCandlestick)
 ===================================
 An open-high-low-close chart (also OHLC chart, or simply bar chart) is a type of chart typically used to illustrate movements in the price of a financial instrument over time. Each vertical line on the chart shows the price range (the highest and lowest prices) over one unit of time, e.g., one day or one hour. Tick marks project from each side of the line indicating the opening price (e.g., for a daily bar chart this would be the starting price for that day) on the left, and the closing price for that time period on the right. The bars may be shown in different hues depending on whether prices rose or fell in that period.
 
