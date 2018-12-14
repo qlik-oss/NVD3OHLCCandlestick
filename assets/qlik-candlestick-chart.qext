@@ -1,0 +1,16 @@
+{
+	"name": "Candlestick chart",
+	"description": "NVD3 Candlestick and OHLC chart",
+	"type": "visualization",
+	"version": "X.Y.Z",
+	"icon": "extension",
+	"preview": "qlik-candlestick-chart.png",
+	"author": "Brian Booden <brian.booden@coopersoftware.co.uk>",
+	"homepage": "",
+	"keywords": "qlik-sense, visualization, trellis chart",
+	"license": "MIT",
+	"repository": "",
+	"dependencies": {
+		"qlik-sense": ">=5.5.x"
+	}
+}

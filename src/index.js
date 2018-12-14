@@ -1,7 +1,7 @@
-define(["jquery", "./d3.v3.min", "css!./nv.d3.min.css"], 
+define(["jquery", "./d3.v3.min", "css!./nv.d3.min.css"],
 function($) {
 	'use strict';
-	
+
 	return {
 		initialProperties: {
 			qHyperCubeDef: {
@@ -38,7 +38,7 @@ function($) {
 							type: "string",
 							component: "dropdown",
 							label: "Chart Type",
-							options: 
+							options:
 								[ {
 									value: "ohlc",
 									label: "OHLC"
@@ -48,7 +48,7 @@ function($) {
 								}
 								],
 							defaultValue: "ohlc"
-						}						
+						}
 					}
 				}
 			}
@@ -56,33 +56,33 @@ function($) {
 		snapshot: {
 			canTakeSnapshot: true
 		},
-	
+
 		paint: function ($element, layout) {
-		
+
 			drawStreamChart($element, layout);
-			
+
 		}
 	};
 });
 
 function drawStreamChart($element, layout) {
-			
+
 			//create matrix variable
 			var qMatrix = layout.qHyperCube.qDataPages[0].qMatrix;
-		
+
 			// create a new array that contains the measure labels
 			var measureLabels = layout.qHyperCube.qMeasureInfo.map(function(d) {
 				return d.qFallbackTitle;
 			});
 			// Create a new array for our extension with a row for each row in the qMatrix
-			// Filter dimesnion Null value 
+			// Filter dimesnion Null value
 			var data = qMatrix;
 
 			// Get the selected counts for the 2 dimensions, which will be used later for custom selection logic
 			var selections = {
 				dim1_count: layout.qHyperCube.qDimensionInfo[0].qStateCounts.qSelected
 			};
-			
+
 
 			// Chart object width
 			var width = $element.width();
@@ -90,14 +90,14 @@ function drawStreamChart($element, layout) {
 			var height = $element.height();
 			// Chart object id
 			var id = "container_" + layout.qInfo.qId;
-		    		 
+
 			$element.empty().append($('<div />').attr({ "id": id, "class": "qv-object-nvd3-OHLC" }).css({ height: height, width: width }));
 
 			// Call the viz function
 			viz(self, data, measureLabels, width, height, id, selections, layout, $element);
-	
+
 }
-			
+
 var viz = function (self, data, labels, width, height, id, selections, layout, $element) {
 
 	// Get the properties
@@ -108,28 +108,28 @@ var viz = function (self, data, labels, width, height, id, selections, layout, $
 					return {"date" : convertToUnixTime(row[0].qNum), "open" : row[1].qNum, "high" : row[2].qNum, "low" : row[3].qNum, "close" : row[4].qNum};
 				});
 
-				
+
 	// Transform data set into required format for NVD3
 	dataNVD3 = d3.nest()
 				.key(function(d) { return 'All'; })
 				.entries(dataNVD3);
 
-	
+
 	// Set the margins of the object
 	var margin = {top: 20, right: 10, bottom: 50, left: 50},
 		width = width - margin.left - margin.right,
 		height = height - margin.top - margin.bottom;
-	
-	// Create the svg element	
+
+	// Create the svg element
 	var svg = d3.select("#"+id)
 		.append("svg:svg");
-		
-	
+
+
     var chart;
-	
+
 	// Create the graph in NVD3
 	nv.addGraph(function() {
-		
+
 		 // Select whether OHLC or Candlestick
 	     chart = (chartType == 'ohlc' ? chart = nv.models.ohlcBarChart() : chart = nv.models.candlestickBarChart())
             .x(function(d) { return d['date'] })
@@ -137,7 +137,7 @@ var viz = function (self, data, labels, width, height, id, selections, layout, $
             .duration(250)
             .margin({left: 75, bottom: 50, right: 30})
             ;
-		
+
         // chart sub-models (ie. xAxis, yAxis, etc) when accessed directly, return themselves, not the parent chart, so need to chain separately
         chart.xAxis
                 .axisLabel("Dates")
@@ -149,7 +149,7 @@ var viz = function (self, data, labels, width, height, id, selections, layout, $
                 .axisLabel('Stock Price')
                 .tickFormat(function(d,i){ return d3.format(',.2f')(d); })
 				;
-		
+
 		// call the chart
        d3.select('#'+id+' svg')
                 .datum(dataNVD3)
@@ -158,7 +158,7 @@ var viz = function (self, data, labels, width, height, id, selections, layout, $
         nv.utils.windowResize(chart.update);
         return chart;
     });
-		  
+
 }
 
 function dateFromQlikNumber(n) {
