@@ -34,6 +34,7 @@ module.exports = (config) => {
             exclude: [/node_modules/],
             loaders: ['babel-loader']
           },
+          { test: /\.css$/, loader: 'ignore-loader' },
           { test: /\.less$/, loader: 'ignore-loader' },
           { test: /\.json$/, loader: 'ignore-loader' }
         ]
